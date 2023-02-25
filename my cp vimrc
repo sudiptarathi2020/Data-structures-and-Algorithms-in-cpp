@@ -19,10 +19,16 @@ setlocal indentkeys-=:
  
 "Theme (requires Solarized Light terminal theme to work properly)
 let g:solarized_termcolors=256
-set background=light
+set background=dark
 colorscheme blue
 
- 
+nnoremap <silent> [oh :call gruvbox#hls_show()<CR>
+nnoremap <silent> ]oh :call gruvbox#hls_hide()<CR>
+nnoremap <silent> coh :call gruvbox#hls_toggle()<CR>
+
+nnoremap * :let @/ = ""<CR>:call gruvbox#hls_show()<CR>*
+nnoremap / :let @/ = ""<CR>:call gruvbox#hls_show()<CR>/
+nnoremap ? :let @/ = ""<CR>:call gruvbox#hls_show()<CR>? 
 "keybindings for { completion, "jk" for escape, ctrl-a to select all
 inoremap {<CR>  {<CR>}<Esc>O
 "inoremap {<CR>  {<CR>}<Esc>O
@@ -34,7 +40,7 @@ map <C-a> <esc>ggVG<CR>
 set belloff=all
  
 "Append template to new C++ files
-autocmd BufNewFile *.cpp 0r /home/student/vimcp/template.cpp
+"autocmd BufNewFile *.cpp 0r /home/student/vimcp/template.cpp
 " autocmd filetype cpp nnoremap <F9> :w <bar> !g++ -std=c++17 -Wshadow -Wall -o %:r -g -fsanitize=address -fsanitize=undefined -D_GLIBCXX_DEBUG<CR>
 "Compile and run
 ":autocmd filetype cpp nnoremap <F10> :g++ -std=c++17 -Wshadow -Wall -o %:r -O2 -Wno-unused-result<CR>
@@ -49,17 +55,17 @@ autocmd filetype cpp nnoremap <F10> :!./%:r<CR>
 "LaTeX settings
 autocmd FileType tex :NoMatchParen
 autocmd FileType tex :set tw=110
- 
+execute pathogen#infect() 
 "Plugin setup
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'lervag/vimtex'
-Plugin 'octol/vim-cpp-enhanced-highlight'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'valloric/youcompleteme'
-call vundle#end()
+"set rtp+=~/.vim/bundle/Vundle.vim
+"call vundle#begin()
+"Plugin 'VundleVim/Vundle.vim'
+"Plugin 'lervag/vimtex'
+"Plugin 'octol/vim-cpp-enhanced-highlight'
+"Plugin 'jiangmiao/auto-pairs'
+"Plugin 'altercation/vim-colors-solarized'
+"Plugin 'valloric/youcompleteme'
+"call vundle#end()
 filetype plugin indent on
 let g:vimtex_view_general_viewer = 'SumatraPDF'
 let g:vimtex_view_general_options = '-reuse-instance @pdf'
