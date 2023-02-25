@@ -12,6 +12,7 @@ set shellslash
 set number
 set relativenumber
 set cino+=L0 
+set clipboard=unnamedplus
 syntax on
 filetype indent on
 filetype off
@@ -55,7 +56,7 @@ autocmd filetype cpp nnoremap <F10> :!./%:r<CR>
 "LaTeX settings
 autocmd FileType tex :NoMatchParen
 autocmd FileType tex :set tw=110
-execute pathogen#infect() 
+"execute pathogen#infect() 
 "Plugin setup
 "set rtp+=~/.vim/bundle/Vundle.vim
 "call vundle#begin()
