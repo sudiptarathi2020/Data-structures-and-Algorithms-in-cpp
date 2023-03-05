@@ -18,10 +18,10 @@
 #define scnd second
 #define all(s) (s).begin(),(s.end())
 #define sz(x) (ll)(x).size();
-#define FOR(i,a,b) for(int i=a;i<(b);i++)
-#define F0R(i,a) for(int i=0;i<(a);i++)
-#define FORd(i,a,b) for(int i=a;i>=b;i--)
-#define F0Rd(i,a) for(int i=a;i>=0;i--)
+#define FOR(i,a,b) for(ll i=a;i<(b);i++)
+#define F0R(i,a) for(ll i=0;i<(a);i++)
+#define FORd(i,a,b) for(ll i=a;i>=b;i--)
+#define F0Rd(i,a) for(ll i=a;i>=0;i--)
 using namespace std;
 const ll inf=LLONG_MAX;
 const ll ninf=LLONG_MIN;
