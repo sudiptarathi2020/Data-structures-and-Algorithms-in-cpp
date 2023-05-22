@@ -20,8 +20,8 @@ setlocal indentkeys-=:
  
 "Theme (requires Solarized Light terminal theme to work properly)
 let g:solarized_termcolors=256
-set background=dark
-colorscheme blue
+"set background=dark
+"colorscheme blue
 
 nnoremap <silent> [oh :call gruvbox#hls_show()<CR>
 nnoremap <silent> ]oh :call gruvbox#hls_hide()<CR>
@@ -58,15 +58,15 @@ autocmd FileType tex :NoMatchParen
 autocmd FileType tex :set tw=110
 "execute pathogen#infect() 
 "Plugin setup
-"set rtp+=~/.vim/bundle/Vundle.vim
-"call vundle#begin()
-"Plugin 'VundleVim/Vundle.vim'
-"Plugin 'lervag/vimtex'
-"Plugin 'octol/vim-cpp-enhanced-highlight'
-"Plugin 'jiangmiao/auto-pairs'
-"Plugin 'altercation/vim-colors-solarized'
-"Plugin 'valloric/youcompleteme'
-"call vundle#end()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'lervag/vimtex'
+Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'valloric/youcompleteme'
+call vundle#end()
 filetype plugin indent on
 let g:vimtex_view_general_viewer = 'SumatraPDF'
 let g:vimtex_view_general_options = '-reuse-instance @pdf'
@@ -90,3 +90,4 @@ if executable(s:clip)
             \ set nornu |
             \ set number |
             \ let g:loaded_matchparen=1
+
