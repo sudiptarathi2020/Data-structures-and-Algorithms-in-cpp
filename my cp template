@@ -43,17 +43,17 @@ typedef set<ll,greater<ll>> rst;
 typedef set<pl,greater<pl>> rstp;
 typedef vector<pl> vpl;
 typedef vector<string> vs;
-void sol(ll test){
+void sol(int test){
 
     return; 
 }
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(NULL);cout.tie(NULL);
-    ll t;cin>>t;
-    FOR(i,1,t+1){
-        sol(i);
-    }
+    int t;cin>>t;
+    for(int i=1;i<=t;i++){
+		sol(i);
+	}
     return 0;
 }
 
