@@ -69,6 +69,7 @@ template<typename T>struct SET{
         }else{
             if(root->left==NULL and root->right==NULL){
                 delete(root);
+                Size--;
                 root=nullptr;
             }else if(root->left !=NULL and root->right!=NULL){
                 if(root->left->prior<root->right->prior){
@@ -83,6 +84,7 @@ template<typename T>struct SET{
                 Node B=root;
                 root=A;
                 delete(B);
+                Size--;
             }
         }
     }
