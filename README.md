@@ -5,7 +5,7 @@ This repository contains C++ templates for various algorithms and data structure
 ## Contents
 
 - [AVL Tree](https://en.wikipedia.org/wiki/AVL_tree)
-- [Centroid Decomposition](https://en.wikipedia.org/wiki/Centroid_decomposition)
+- [Centroid Decomposition](https://usaco.guide/plat/centroid?lang=cpp)
 - [Finding Subsegment with Maximum Sum](https://en.wikipedia.org/wiki/Maximum_subarray_problem)
 - [Convex Hull](https://en.wikipedia.org/wiki/Convex_hull)
 - [Dynamic Segment Tree](https://cp-algorithms.com/data_structures/segment_tree.html#dynamic-segment-tree)
