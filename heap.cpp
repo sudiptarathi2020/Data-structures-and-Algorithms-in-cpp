@@ -1,6 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
-template<typename T,typename Comp=std::greater<T>>struct heap{//maxheap greater<T>,minheap less<T>
+template<typename T,typename Comp>struct heap{//maxheap greater<T>,minheap less<T>
     Comp comp;
     vector<T>hp;
     heap(){hp.push_back(T());}
@@ -40,7 +40,7 @@ template<typename T,typename Comp=std::greater<T>>struct heap{//maxheap greater<
     }
 };
 int main(){
-    heap<int>H;
+    heap<int,greater<int>>H;
     for(int i=1;i<15;i+=2){
         H.push(i);
     }
