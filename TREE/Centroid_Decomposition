@@ -1,154 +1,98 @@
-struct LCA{
-    int n,timer;
-    int lg;
-    vector<vector<int>>edges,par;
-    vector<int>depth,in,out;
-    vector<bool>vis;
-    LCA(){}
-    LCA(int _n){
-        this->n=_n;
-        this->timer=0;
-        this->lg=ceil(log2(n));
-        par.assign(n+1,vector<int>(lg+1));
-        edges.assign(n+1,vector<int>());
-        depth.assign(n+1,-1);
-        vis.assign(n+1,false);
-        in.assign(n+1,-1);
-        out.assign(n+1,-1);
+//centroid decomposition
+//solved problem: Xenia and Tree
+#include<bits/stdc++.h>
+using namespace std;
+const int N=100050,lg=18;
+int timer=0,sz[N],parent[N][lg],centroid_parent[N],In[N],out[N],level[N],vis[N],best_dist[N];
+vector<int>edges[N];
+void dfs(int source,int P){
+    level[source]=level[P]+1;
+    parent[source][0]=P;
+    In[source]=timer++;
+    for(int i=1;i<lg;i++){
+        parent[source][i]=parent[parent[source][i-1]][i-1];
     }
-    void INIT(int _n){
-        this->n=_n;
-        this->timer=0;
-        this->lg=ceil(log2(n));
-        par.assign(n+1,vector<int>(lg+1));
-        edges.assign(n+1,vector<int>());
-        depth.assign(n+1,-1);
-        vis.assign(n+1,false);
-        in.assign(n+1,-1);
-        out.assign(n+1,-1);
-    }
-
-    void add(int a,int b){
-        edges[a].pb(b);
-        edges[b].pb(a);
-    }
-    void DFS(int source=0,int parent=0){
-        vis[source]=true;
-        in[source]=timer++;
-        depth[source]=depth[parent]+1;
-        par[source][0]=parent;
-        for(int i=1;i<=lg;i++){
-            par[source][i]=par[par[source][i-1]][i-1];
-        }
-        for(int x:edges[source]){
-            if(vis[x])continue;
-            DFS(x,source);
-        }
-        out[source]=timer++;
-    }
-    bool IS(int a,int b){
-        if(in[a]<=in[b] and out[a]>=out[b]){
-            return true;
-        }
-        return false;
-    }
-    void init(){
-        depth[0]=-1;
-        DFS();
-    }
-    int lca(int u,int v){
-        if(IS(u,v)){
-            return u;
-        }
-        if(IS(v,u)){
-            return v;
-        }
-        for(int i=lg;i>=0;i--){
-            if(!IS(par[u][i],v)){
-                u=par[u][i];
-            }
-        }
-        return par[u][0];
-    }
-    int get_dist(int u,int b){
-        int x=lca(u,b);
-        return depth[u]+depth[b]-2*depth[x];
-    }
-};
-LCA L;
-struct centroid{
-    int n;
-    vector<vector<int>>edges;
-    vector<bool>vis;
-    vector<int>par;
-    vector<int>sz;
-    centroid(){}
-    centroid(int _n){
-        this->n=_n;
-        edges.assign(n+1,vector<int>());
-        vis.assign(n+1,false);
-        par.assign(n+1,0);
-        sz.assign(n+1,0);
-    }
-    void INIT(int _n){
-        this->n=_n;
-        edges.assign(n+1,vector<int>());
-        vis.assign(n+1,false);
-        par.assign(n+1,0);
-        sz.assign(n+1,0);
-    }
-    void add(int a,int b){
-        edges[a].pb(b);
-        edges[b].pb(a);
-    }
-    void find_sz(int v,int p=-1){
-        if(vis[v])return;
-        sz[v]=1;
-        for(int x:edges[v]){
-            if(x!=p and !vis[x]){
-                find_sz(x,v);
-                sz[v]+=sz[x];
-            }
+    for(int x:edges[source]){
+        if(x!=P){
+            dfs(x,source);
         }
     }
-    int find_cen(int v,int p,int NN){
-        for(int x:edges[v]){
-            if(x!=p){
-                if(!vis[x] and sz[x]>NN/2){
-                    return find_cen(x,v,NN);
-                }
-            }
-        }
-        return v;
-    }
-    void init_cen(int v=0,int p=-1){
-        find_sz(v);
-        int c=find_cen(v,-1,sz[v]);
-        vis[c]=true;
-        par[c]=p;
-        for(int x:edges[c]){
-            if(!vis[x]){
-                init_cen(x,c);
-            }
+    out[source]=timer++;
+}
+bool is(int A,int B){return In[A]<=In[B] && out[A]>=out[B];}
+int lca(int A,int B){
+    if(is(A,B))return A;
+    if(is(B,A))return B;
+    for(int i=lg-1;i>=0;i--){
+        if(!is(parent[A][i],B)){
+            A=parent[A][i];
         }
     }
-};
-centroid C;
-vector<int>best;
-void update(int v){
-    best[v]=0;
-    int u=v;
-    while(C.par[u]!=-1){
-        u=C.par[u];
-        best[u]=min(best[u],L.get_dist(u,v));
+    return parent[A][0];
+}
+int dist(int A,int B){
+    return level[A]+level[B]-2*level[lca(A,B)];
+}
+void szdfs(int source,int P=-1){
+    if(vis[source])return;
+    sz[source]=1;
+    for(int x:edges[source]){
+        if(x!=P and !vis[x]){
+            szdfs(x,source);
+            sz[source]+=sz[x];
+        }
     }
 }
-int quety(int v){
-    int ans=best[v];
-    int u=v;
-    while(C.par[u]!=-1){
-        u=C.par[u];
-        ans=min(ans,best[u]+L.get_dist(u,v));
+int find_centroid(int source,int p,int SZ){
+    for(int x:edges[source]){
+        if(x!=p && !vis[x] && sz[x]>(SZ>>1)){
+            return find_centroid(x,source,SZ);
+        }
+    }
+    return source;
+}
+void centroid_initialzation(int source,int P=-1){
+    szdfs(source);
+    int centoird=find_centroid(source,-1,sz[source]);
+    vis[centoird]=true;centroid_parent[centoird]=P;
+    for(int x:edges[centoird]){
+        if(!vis[x])centroid_initialzation(x,centoird);
+    }
+}
+void upd(int V){
+    best_dist[V]=0;
+    int U=V;
+    while(centroid_parent[U]!=-1){
+        U=centroid_parent[U];
+        best_dist[U]=min(best_dist[U],dist(U,V));
+    }
+}
+int Qry(int V){
+    int ans=best_dist[V];
+    int U=V;
+    while(centroid_parent[U]!=-1){
+        U=centroid_parent[U];
+        ans=min(ans,best_dist[U]+dist(U,V));
     }
     return ans;
+}
+int main(){
+    int X,Y,n,Q;cin>>n>>Q;
+    for(int i=1;i<n;i++){
+        best_dist[i]=N;
+        cin>>X>>Y;
+        edges[X].push_back(Y);edges[Y].push_back(X);
+    }
+    best_dist[n]=N;
+    dfs(1,1);
+    centroid_initialzation(1);
+    upd(1);
+    while(Q--){
+        int choice,v;cin>>choice>>v;
+        if(choice==1){
+            upd(v);
+        }else{
+            cout<<Qry(v)<<endl;
+        }
+    }
 }
