@@ -9,6 +9,7 @@ set showcmd
 set incsearch
 set shellslash
 set number
+set backspace=indent,eol,start
 set relativenumber
 set cino+=L0 
 set clipboard=unnamedplus
