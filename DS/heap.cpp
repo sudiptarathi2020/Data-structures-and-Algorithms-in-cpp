@@ -38,6 +38,9 @@ template<typename T,typename Comp>struct heap{//maxheap greater<T>,minheap less<
     int sz(){
         return (int)hp.size()-1;
     }
+    bool empty(){
+        return sz()==0;
+    }
 };
 int main(){
     heap<int,greater<int>>H;
